@@ -1,41 +1,247 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getCollection } from 'astro:content';
-
-const articles = (await getCollection('articles')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
 ---
 
-<Layout title="Startseite" description="Aktuelle Artikel und Ratgeber">
-  <h1 class="text-3xl font-bold mb-8">Aktuelle Artikel</h1>
+<Layout
+  title="CO2 Steuer Rechner für Heizung - Berechnen Sie Ihre CO2-Abgabe 2026"
+  description="Kostenloser CO2 Steuer Rechner für Heizung: Berechnen Sie schnell und einfach die CO2-Abgabe für Gas, Öl und andere Brennstoffe. Aktuelle Sätze für 2026 inklusive."
+>
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Main Content -->
+    <div class="lg:col-span-2">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">
+        CO2-Steuer Rechner für Heizung
+      </h1>
 
-  {articles.length === 0 ? (
-    <p class="text-gray-500">Noch keine Artikel vorhanden. Schau bald wieder vorbei!</p>
-  ) : (
-    <ul class="space-y-6">
-      {articles.map((article) => (
-        <li class="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
-          <a href={`/artikel/${article.id}`} class="block">
-            <h2 class="text-xl font-semibold text-blue-600 hover:text-blue-800">
-              {article.data.title}
-            </h2>
-            {article.data.description && (
-              <p class="mt-2 text-gray-600">{article.data.description}</p>
-            )}
-            <time
-              datetime={article.data.pubDate.toISOString()}
-              class="mt-2 block text-sm text-gray-400"
+      <p class="text-lg text-gray-700 mb-6">
+        Berechnen Sie die CO2-Steuer für Ihre Heizung schnell und einfach. Seit 2021 wird in Deutschland eine CO2-Abgabe auf fossile Brennstoffe erhoben. Mit unserem kostenlosen Rechner ermitteln Sie die anfallenden Kosten für Ihre Heizung – egal ob Gas, Öl, Kohle oder Fernwärme.
+      </p>
+
+      <!-- Calculator Section -->
+      <div class="bg-green-50 border-2 border-green-200 rounded-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-green-800 mb-4">
+          Jetzt CO2-Kosten berechnen
+        </h2>
+
+        <form id="co2-calculator" class="space-y-4">
+          <!-- Fuel Type -->
+          <div>
+            <label for="fuel-type" class="block text-sm font-medium text-gray-700 mb-2">
+              Brennstoffart
+            </label>
+            <select
+              id="fuel-type"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
             >
-              {article.data.pubDate.toLocaleDateString('de-DE', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
-            </time>
-          </a>
-        </li>
-      ))}
-    </ul>
-  )}
+              <option value="gas">Erdgas</option>
+              <option value="oil">Heizöl</option>
+              <option value="coal">Kohle</option>
+              <option value="fernwaerme">Fernwärme</option>
+            </select>
+          </div>
+
+          <!-- Consumption -->
+          <div>
+            <label for="consumption" class="block text-sm font-medium text-gray-700 mb-2">
+              Jahresverbrauch
+            </label>
+            <div class="flex gap-2">
+              <input
+                type="number"
+                id="consumption"
+                placeholder="z.B. 20000"
+                class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              />
+              <span id="unit" class="px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg">kWh</span>
+            </div>
+          </div>
+
+          <!-- Year -->
+          <div>
+            <label for="year" class="block text-sm font-medium text-gray-700 mb-2">
+              Jahr
+            </label>
+            <select
+              id="year"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            >
+              <option value="2026">2026 (aktuell)</option>
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+            </select>
+          </div>
+
+          <!-- Calculate Button -->
+          <button
+            type="submit"
+            class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
+          >
+            CO2-Steuer berechnen
+          </button>
+        </form>
+
+        <!-- Result -->
+        <div id="result" class="hidden mt-6 p-4 bg-white border-2 border-green-300 rounded-lg">
+          <h3 class="font-bold text-lg text-gray-900 mb-2">Ihr Ergebnis:</h3>
+          <div class="text-3xl font-bold text-green-700" id="result-amount">
+            <!-- Result will be inserted here -->
+          </div>
+          <p class="text-sm text-gray-600 mt-2" id="result-details">
+            <!-- Details will be inserted here -->
+          </p>
+        </div>
+      </div>
+
+      <!-- Information Section -->
+      <div class="prose prose-lg max-w-none">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+          Was ist die CO2-Steuer für Heizung?
+        </h2>
+
+        <p class="text-gray-700 mb-4">
+          Die CO2-Abgabe ist eine Klimaschutzmaßnahme der Bundesregierung, die fossile Brennstoffe verteuert. Ziel ist es, den Ausstoß von Treibhausgasen zu reduzieren und klimafreundliche Alternativen wie Wärmepumpen oder erneuerbare Energien attraktiver zu machen.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mb-3">
+          Aktuelle CO2-Preise 2026
+        </h3>
+
+        <ul class="list-disc list-inside space-y-2 text-gray-700 mb-6">
+          <li><strong>2026:</strong> 55 Euro pro Tonne CO2</li>
+          <li><strong>2025:</strong> 45 Euro pro Tonne CO2</li>
+          <li><strong>2024:</strong> 45 Euro pro Tonne CO2</li>
+          <li><strong>2023:</strong> 30 Euro pro Tonne CO2</li>
+        </ul>
+
+        <h3 class="text-xl font-bold text-gray-900 mb-3">
+          Wie wird die CO2-Steuer berechnet?
+        </h3>
+
+        <p class="text-gray-700 mb-4">
+          Die Höhe der CO2-Abgabe hängt vom CO2-Ausstoß des jeweiligen Brennstoffs ab. Verschiedene Energieträger verursachen unterschiedlich hohe Emissionen:
+        </p>
+
+        <ul class="list-disc list-inside space-y-2 text-gray-700 mb-6">
+          <li><strong>Erdgas:</strong> ca. 0,202 kg CO2 pro kWh</li>
+          <li><strong>Heizöl:</strong> ca. 0,266 kg CO2 pro kWh</li>
+          <li><strong>Kohle:</strong> ca. 0,338 kg CO2 pro kWh</li>
+          <li><strong>Fernwärme:</strong> ca. 0,200 kg CO2 pro kWh (variiert je nach Erzeugung)</li>
+        </ul>
+
+        <h3 class="text-xl font-bold text-gray-900 mb-3">
+          Wer zahlt die CO2-Steuer?
+        </h3>
+
+        <p class="text-gray-700 mb-4">
+          Seit Juni 2022 teilen sich Vermieter und Mieter die CO2-Abgabe gestaffelt nach energetischem Zustand des Gebäudes. Bei sehr effizienten Gebäuden trägt der Mieter die volle Last, bei sehr ineffizienten Gebäuden bis zu 95% der Vermieter.
+        </p>
+
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 my-6">
+          <p class="text-sm text-blue-900">
+            <strong>Tipp:</strong> Mit energetischen Sanierungsmaßnahmen wie verbesserter Dämmung oder dem Umstieg auf erneuerbare Energien können Sie Ihre CO2-Kosten langfristig senken.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar (Ad Space) -->
+    <div class="lg:col-span-1">
+      <div class="sticky top-4 space-y-6">
+        <!-- Ad Placeholder 1 -->
+        <div class="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+          <p class="text-gray-500 text-sm">Werbefläche 300x250</p>
+        </div>
+
+        <!-- Quick Info Box -->
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+          <h3 class="font-bold text-lg text-blue-900 mb-3">
+            Schnellinfo
+          </h3>
+          <ul class="space-y-2 text-sm text-blue-900">
+            <li>✓ Kostenloser Rechner</li>
+            <li>✓ Aktuelle Steuersätze</li>
+            <li>✓ Alle Brennstoffarten</li>
+            <li>✓ Sofortiges Ergebnis</li>
+          </ul>
+        </div>
+
+        <!-- Ad Placeholder 2 -->
+        <div class="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+          <p class="text-gray-500 text-sm">Werbefläche 300x600</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </Layout>
+
+<script>
+  // CO2 emissions per kWh (in kg)
+  const emissionFactors = {
+    gas: 0.202,      // Erdgas
+    oil: 0.266,      // Heizöl
+    coal: 0.338,     // Kohle
+    fernwaerme: 0.200 // Fernwärme
+  };
+
+  // CO2 price per ton (in EUR)
+  const co2Prices = {
+    2026: 55,
+    2025: 45,
+    2024: 45,
+    2023: 30
+  };
+
+  const form = document.getElementById('co2-calculator') as HTMLFormElement;
+  const fuelTypeSelect = document.getElementById('fuel-type') as HTMLSelectElement;
+  const consumptionInput = document.getElementById('consumption') as HTMLInputElement;
+  const yearSelect = document.getElementById('year') as HTMLSelectElement;
+  const unitSpan = document.getElementById('unit') as HTMLSpanElement;
+  const resultDiv = document.getElementById('result') as HTMLDivElement;
+  const resultAmount = document.getElementById('result-amount') as HTMLDivElement;
+  const resultDetails = document.getElementById('result-details') as HTMLParagraphElement;
+
+  // Update unit based on fuel type
+  fuelTypeSelect.addEventListener('change', () => {
+    const fuelType = fuelTypeSelect.value;
+    unitSpan.textContent = fuelType === 'oil' ? 'Liter' : 'kWh';
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const fuelType = fuelTypeSelect.value;
+    let consumption = parseFloat(consumptionInput.value);
+    const year = yearSelect.value;
+
+    if (!consumption || consumption <= 0) {
+      alert('Bitte geben Sie einen gültigen Verbrauch ein.');
+      return;
+    }
+
+    // Convert liters to kWh for oil (1 liter ≈ 10 kWh)
+    if (fuelType === 'oil') {
+      consumption = consumption * 10;
+    }
+
+    // Calculate CO2 emissions in kg
+    const co2Kg = consumption * emissionFactors[fuelType as keyof typeof emissionFactors];
+
+    // Convert to tons
+    const co2Tons = co2Kg / 1000;
+
+    // Calculate cost
+    const cost = co2Tons * co2Prices[year as keyof typeof co2Prices];
+
+    // Display result
+    resultAmount.textContent = `${cost.toFixed(2)} € pro Jahr`;
+    resultDetails.innerHTML = `
+      Bei einem Verbrauch von <strong>${consumptionInput.value} ${unitSpan.textContent}</strong>
+      entstehen ca. <strong>${co2Tons.toFixed(2)} Tonnen CO2</strong> im Jahr ${year}.<br>
+      CO2-Preis ${year}: ${co2Prices[year as keyof typeof co2Prices]} €/Tonne
+    `;
+
+    resultDiv.classList.remove('hidden');
+    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+</script>

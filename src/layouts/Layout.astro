@@ -28,32 +28,50 @@ const siteUrl = Astro.site?.toString() ?? '';
 
     <title>{title}</title>
 
+    <!-- Analytics -->
+    <script defer data-domain="co2-steuer-rechner-fuer-heizung.de" src="https://plausible.io/js/script.js"></script>
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "CO2 Steuer Rechner für Heizung",
+        "url": "https://co2-steuer-rechner-fuer-heizung.de",
+        "description": "Berechnen Sie die CO2-Steuer für Ihre Heizung - einfach, schnell und kostenlos",
+        "publisher": {
+          "@type": "Organization",
+          "name": "CO2 Steuer Rechner für Heizung"
+        }
+      }
+    </script>
+
     <style is:global>
       @import "tailwindcss";
     </style>
   </head>
   <body class="bg-white text-gray-900 min-h-screen flex flex-col">
     <header class="border-b border-gray-200 py-4 px-6">
-      <nav class="max-w-4xl mx-auto flex justify-between items-center">
-        <a href="/" class="text-xl font-bold hover:text-blue-600 transition-colors">
-          {title}
+      <nav class="max-w-6xl mx-auto flex justify-between items-center">
+        <a href="/" class="text-xl font-bold text-green-700 hover:text-green-800 transition-colors">
+          CO2 Steuer Rechner
         </a>
         <div class="flex gap-4 text-sm text-gray-600">
-          <a href="/" class="hover:text-gray-900">Startseite</a>
+          <a href="/" class="hover:text-gray-900">Rechner</a>
           <a href="/impressum" class="hover:text-gray-900">Impressum</a>
           <a href="/datenschutz" class="hover:text-gray-900">Datenschutz</a>
         </div>
       </nav>
     </header>
 
-    <main class="flex-1 max-w-4xl mx-auto px-6 py-8 w-full">
+    <main class="flex-1 max-w-6xl mx-auto px-6 py-8 w-full">
       <slot />
     </main>
 
     <footer class="border-t border-gray-200 py-6 px-6 text-center text-sm text-gray-500">
-      <div class="max-w-4xl mx-auto">
+      <div class="max-w-6xl mx-auto">
         <p>
-          Diese Seite enthaelt Affiliate-Links. Bei einem Kauf ueber diese Links erhalten wir eine Provision.
+          &copy; {new Date().getFullYear()} CO2 Steuer Rechner für Heizung - Alle Angaben ohne Gewähr
         </p>
         <div class="mt-2 flex justify-center gap-4">
           <a href="/impressum" class="hover:text-gray-700">Impressum</a>
